@@ -126,7 +126,6 @@ app.get('/search', async (req, res) => {
                     data.push(books[i]);
                 }
             }
-            console.log("Data : " + data);
             for (var j = 0; j < magazines.length; j++) {
                 if (magazines[j].authors == req.query.authors) {
                     data.push(magazines[j]);
@@ -134,7 +133,10 @@ app.get('/search', async (req, res) => {
             }
         }
         if (data) {
-            return res.send(data.sort());
+            return res.send(data.sort(function (a, b) {
+                var x = a.title < b.title? -1:1; 
+                return x;
+            }));
         }
         return res.send()
     } catch (e) {
